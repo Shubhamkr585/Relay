@@ -1,0 +1,70 @@
+services:
+  node-1:
+    build: .
+    container_name: relay-node-1
+    environment:
+      - RELAY_NODE_ID=node-1
+      - RELAY_RAFT_ADDR=node-1:7000
+      - RELAY_GRPC_ADDR=0.0.0.0:50051
+      - RELAY_HTTP_ADDR=0.0.0.0:8080
+      - RELAY_DATA_DIR=/data
+      - RELAY_BOOTSTRAP=true
+      - RELAY_PEERS=node-1=node-1:50051,node-2=node-2:50051,node-3=node-3:50051
+    ports:
+      - "50051:50051"
+      - "8080:8080"
+    volumes:
+      - node1-data:/data
+    networks:
+      - relay-net
+
+  node-2:
+    build: .
+    container_name: relay-node-2
+    environment:
+      - RELAY_NODE_ID=node-2
+      - RELAY_RAFT_ADDR=node-2:7000
+      - RELAY_GRPC_ADDR=0.0.0.0:50051
+      - RELAY_HTTP_ADDR=0.0.0.0:8080
+      - RELAY_DATA_DIR=/data
+      - RELAY_JOIN_ADDR=node-1:50051
+      - RELAY_PEERS=node-1=node-1:50051,node-2=node-2:50051,node-3=node-3:50051
+    ports:
+      - "50052:50051"
+      - "8081:8080"
+    volumes:
+      - node2-data:/data
+    networks:
+      - relay-net
+    depends_on:
+      - node-1
+
+  node-3:
+    build: .
+    container_name: relay-node-3
+    environment:
+      - RELAY_NODE_ID=node-3
+      - RELAY_RAFT_ADDR=node-3:7000
+      - RELAY_GRPC_ADDR=0.0.0.0:50051
+      - RELAY_HTTP_ADDR=0.0.0.0:8080
+      - RELAY_DATA_DIR=/data
+      - RELAY_JOIN_ADDR=node-1:50051
+      - RELAY_PEERS=node-1=node-1:50051,node-2=node-2:50051,node-3=node-3:50051
+    ports:
+      - "50053:50051"
+      - "8082:8080"
+    volumes:
+      - node3-data:/data
+    networks:
+      - relay-net
+    depends_on:
+      - node-1
+
+volumes:
+  node1-data:
+  node2-data:
+  node3-data:
+
+networks:
+  relay-net:
+    driver: bridge

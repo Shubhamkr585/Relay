@@ -1,0 +1,73 @@
+{
+  "id": "b4_e2e_flow",
+  "name": "B4: End-to-End Flow (Enqueue -\u003e Reserve -\u003e Ack)",
+  "description": "Concurrent producers and workers measuring full lifecycle latency and throughput",
+  "config": {
+    "producers": "8",
+    "workers": "8"
+  },
+  "repetitions": [
+    {
+      "repetition": 1,
+      "duration": 5192657500,
+      "total_ops": 843,
+      "throughput": 162.34461833849045,
+      "latency": {
+        "count": 843,
+        "min": 40773100,
+        "p50": 622339700,
+        "p95": 2375237500,
+        "p99": 3817189600,
+        "p999": 4062533400,
+        "max": 4062533400,
+        "mean": 899709913
+      },
+      "errors": 0,
+      "timeouts": 0,
+      "thermal_slices": [
+        164.1127052248028,
+        122.24874826013836
+      ],
+      "rss_bytes": 0,
+      "sanity_pass": true,
+      "sanity_note": "E2E flow: 843 completed out of 1561 enqueued"
+    }
+  ],
+  "throughput": {
+    "median": 162.34461833849045,
+    "min": 162.34461833849045,
+    "max": 162.34461833849045,
+    "std_dev": 0
+  },
+  "latency_p50": {
+    "median": 622339700,
+    "min": 622339700,
+    "max": 622339700,
+    "std_dev": 0
+  },
+  "latency_p95": {
+    "median": 2375237500,
+    "min": 2375237500,
+    "max": 2375237500,
+    "std_dev": 0
+  },
+  "latency_p99": {
+    "median": 3817189600,
+    "min": 3817189600,
+    "max": 3817189600,
+    "std_dev": 0
+  },
+  "latency_p999": {
+    "median": 4062533400,
+    "min": 4062533400,
+    "max": 4062533400,
+    "std_dev": 0
+  },
+  "latency_max": {
+    "median": 4062533400,
+    "min": 4062533400,
+    "max": 4062533400,
+    "std_dev": 0
+  },
+  "overall_pass": true
+}

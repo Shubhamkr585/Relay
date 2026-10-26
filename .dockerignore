@@ -1,0 +1,10 @@
+.git
+bin/
+data/
+bench-results/
+chaos-results/
+*.exe
+*.test
+*.db
+RESUME_NUMBERS.md
+INTERVIEW_NOTES.md

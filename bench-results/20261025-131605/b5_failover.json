@@ -1,0 +1,43 @@
+{
+  "id": "b5_failover",
+  "name": "B5: Leader Failover Latency (Real relayd Subprocesses)",
+  "trials_count": 3,
+  "trials": [
+    {
+      "trial": 1,
+      "killed_leader": "bench-node-1",
+      "new_leader": "bench-node-2",
+      "failover_duration": 528226300,
+      "pre_ack_count": 16,
+      "post_ack_count": 16,
+      "verified_lost_jobs": 0,
+      "pass": true
+    },
+    {
+      "trial": 2,
+      "killed_leader": "bench-node-2",
+      "new_leader": "bench-node-1",
+      "failover_duration": 922045400,
+      "pre_ack_count": 8,
+      "post_ack_count": 8,
+      "verified_lost_jobs": 0,
+      "pass": true
+    },
+    {
+      "trial": 3,
+      "killed_leader": "bench-node-1",
+      "new_leader": "bench-node-2",
+      "failover_duration": 914029000,
+      "pre_ack_count": 19,
+      "post_ack_count": 19,
+      "verified_lost_jobs": 0,
+      "pass": true
+    }
+  ],
+  "min_duration": 528226300,
+  "median_duration": 914029000,
+  "p95_duration": 914029000,
+  "max_duration": 922045400,
+  "total_lost_jobs": 0,
+  "overall_pass": true
+}

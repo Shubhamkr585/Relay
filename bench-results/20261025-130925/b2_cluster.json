@@ -1,0 +1,146 @@
+[
+  {
+    "id": "b2_cluster_c1",
+    "name": "B2: 3-Node Cluster Enqueue",
+    "description": "3-Node Raft cluster closed-loop enqueue with strict fsync",
+    "config": {
+      "concurrency": "1",
+      "mode": "Group Commit (2ms/64-op)"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000444400,
+        "total_ops": 294,
+        "throughput": 97.98548508347629,
+        "latency": {
+          "count": 294,
+          "min": 6637400,
+          "p50": 8869500,
+          "p95": 16019600,
+          "p99": 43036700,
+          "p999": 59778200,
+          "max": 59778200,
+          "mean": 10173870
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          98.14552363941762
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 416 jobs in cluster \u003e= 294 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 97.98548508347629,
+      "min": 97.98548508347629,
+      "max": 97.98548508347629,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 8869500,
+      "min": 8869500,
+      "max": 8869500,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 16019600,
+      "min": 16019600,
+      "max": 16019600,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 43036700,
+      "min": 43036700,
+      "max": 43036700,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 59778200,
+      "min": 59778200,
+      "max": 59778200,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 59778200,
+      "min": 59778200,
+      "max": 59778200,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b2_cluster_c32",
+    "name": "B2: 3-Node Cluster Enqueue",
+    "description": "3-Node Raft cluster closed-loop enqueue with strict fsync",
+    "config": {
+      "concurrency": "32",
+      "mode": "Group Commit (2ms/64-op)"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3006043700,
+        "total_ops": 3184,
+        "throughput": 1059.1995053165726,
+        "latency": {
+          "count": 3184,
+          "min": 8579000,
+          "p50": 25975200,
+          "p95": 62470800,
+          "p99": 123813500,
+          "p999": 185227800,
+          "max": 185227800,
+          "mean": 29908714
+        },
+        "errors": 803,
+        "timeouts": 0,
+        "thermal_slices": [
+          1055.7441884084262
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 4088 jobs in cluster \u003e= 3184 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 1059.1995053165726,
+      "min": 1059.1995053165726,
+      "max": 1059.1995053165726,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 25975200,
+      "min": 25975200,
+      "max": 25975200,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 62470800,
+      "min": 62470800,
+      "max": 62470800,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 123813500,
+      "min": 123813500,
+      "max": 123813500,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 185227800,
+      "min": 185227800,
+      "max": 185227800,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 185227800,
+      "min": 185227800,
+      "max": 185227800,
+      "std_dev": 0
+    },
+    "overall_pass": false
+  }
+]

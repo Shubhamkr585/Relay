@@ -1,0 +1,164 @@
+syntax = "proto3";
+
+package relay.v1;
+
+option go_package = "github.com/shubhamkr585/relay/api/proto/v1;relaypb";
+
+enum JobState {
+  JOB_STATE_UNSPECIFIED = 0;
+  JOB_STATE_PENDING = 1;
+  JOB_STATE_LEASED = 2;
+  JOB_STATE_DONE = 3;
+  JOB_STATE_DEAD = 4;
+}
+
+message Job {
+  string id = 1;
+  string queue = 2;
+  bytes payload = 3;
+  uint32 priority = 4; // 0 = highest, 255 = lowest
+  JobState state = 5;
+  uint32 attempts = 6;
+  uint32 max_attempts = 7;
+  int64 run_at = 8; // UnixNano
+  int64 lease_expires_at = 9; // UnixNano
+  string lease_token = 10;
+  string worker_id = 11;
+  string idempotency_key = 12;
+  int64 created_at = 13; // UnixNano
+  string last_error = 14;
+}
+
+message EnqueueRequest {
+  string queue = 1;
+  bytes payload = 2;
+  uint32 priority = 3;
+  int64 delay_ms = 4;
+  string idempotency_key = 5;
+  uint32 max_attempts = 6;
+}
+
+message EnqueueResponse {
+  string job_id = 1;
+  bool deduplicated = 2;
+}
+
+message ReserveRequest {
+  string queue = 1;
+  string worker_id = 2;
+  int64 lease_duration_ms = 3;
+}
+
+message ReserveResponse {
+  Job job = 1;
+  string lease_token = 2;
+}
+
+message AckRequest {
+  string job_id = 1;
+  string lease_token = 2;
+}
+
+message AckResponse {}
+
+message NackRequest {
+  string job_id = 1;
+  string lease_token = 2;
+  string error_msg = 3;
+  int64 retry_after_ms = 4;
+}
+
+message NackResponse {}
+
+message ExtendLeaseRequest {
+  string job_id = 1;
+  string lease_token = 2;
+  int64 extra_duration_ms = 3;
+}
+
+message ExtendLeaseResponse {
+  int64 new_lease_expires_at = 1; // UnixNano
+}
+
+message StatsRequest {
+  string queue = 1;
+}
+
+message StatsResponse {
+  int64 pending_count = 1;
+  int64 leased_count = 2;
+  int64 done_count = 3;
+  int64 dead_count = 4;
+}
+
+message ListDeadRequest {
+  string queue = 1;
+  uint32 limit = 2;
+}
+
+message ListDeadResponse {
+  repeated Job jobs = 1;
+}
+
+message RequeueDeadRequest {
+  string job_id = 1;
+}
+
+message RequeueDeadResponse {
+  Job job = 1;
+}
+
+message JoinRequest {
+  string node_id = 1;
+  string raft_address = 2;
+}
+
+message JoinResponse {
+  bool success = 1;
+}
+
+// Raft Command structures for replication (used by Raft FSM)
+enum CommandType {
+  COMMAND_TYPE_UNSPECIFIED = 0;
+  COMMAND_TYPE_ENQUEUE = 1;
+  COMMAND_TYPE_RESERVE = 2;
+  COMMAND_TYPE_ACK = 3;
+  COMMAND_TYPE_NACK = 4;
+  COMMAND_TYPE_EXTEND_LEASE = 5;
+  COMMAND_TYPE_REQUEUE_DEAD = 6;
+  COMMAND_TYPE_EXPIRE_LEASES = 7;
+  COMMAND_TYPE_PROMOTE_SCHEDULED = 8;
+  COMMAND_TYPE_BATCH = 9;
+  COMMAND_TYPE_PROMOTE_AND_EXPIRE = 10;
+}
+
+message RaftCommand {
+  CommandType type = 1;
+  int64 timestamp_nano = 2; // Deterministic canonical timestamp stamped by Raft Leader
+  string command_id = 3;
+  
+  Job job = 4;
+  string queue = 5;
+  string worker_id = 6;
+  string lease_token = 7;
+  int64 lease_duration_ms = 8;
+  string last_error = 9;
+  int64 retry_after_nano = 10;
+  int64 extra_duration_ms = 11;
+  
+  // Repeated commands for COMMAND_TYPE_BATCH or COMMAND_TYPE_EXPIRE_LEASES
+  repeated RaftCommand sub_commands = 12;
+}
+
+service RelayService {
+  rpc Enqueue(EnqueueRequest) returns (EnqueueResponse);
+  rpc Reserve(ReserveRequest) returns (ReserveResponse);
+  rpc Ack(AckRequest) returns (AckResponse);
+  rpc Nack(NackRequest) returns (NackResponse);
+  rpc ExtendLease(ExtendLeaseRequest) returns (ExtendLeaseResponse);
+  rpc Stats(StatsRequest) returns (StatsResponse);
+  rpc ListDead(ListDeadRequest) returns (ListDeadResponse);
+  rpc RequeueDead(RequeueDeadRequest) returns (RequeueDeadResponse);
+  rpc Join(JoinRequest) returns (JoinResponse);
+}
+

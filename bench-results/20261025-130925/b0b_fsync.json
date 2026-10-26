@@ -1,0 +1,71 @@
+{
+  "id": "b0b_fsync",
+  "name": "B0b: Raw Disk fsync Baseline",
+  "description": "Direct file writes with sequential fsync to establish disk write ceiling",
+  "config": {
+    "record_size": "256"
+  },
+  "repetitions": [
+    {
+      "repetition": 1,
+      "duration": 3016490700,
+      "total_ops": 3883,
+      "throughput": 1287.257408086821,
+      "latency": {
+        "count": 3883,
+        "min": 0,
+        "p50": 546800,
+        "p95": 1312100,
+        "p99": 2363400,
+        "p999": 11532200,
+        "max": 19032100,
+        "mean": 745891
+      },
+      "errors": 0,
+      "timeouts": 0,
+      "thermal_slices": [
+        1287.257408086821
+      ],
+      "rss_bytes": 0,
+      "sanity_pass": true,
+      "sanity_note": "Raw disk fsync verified (3883 ops, 0 errors)"
+    }
+  ],
+  "throughput": {
+    "median": 1287.257408086821,
+    "min": 1287.257408086821,
+    "max": 1287.257408086821,
+    "std_dev": 0
+  },
+  "latency_p50": {
+    "median": 546800,
+    "min": 546800,
+    "max": 546800,
+    "std_dev": 0
+  },
+  "latency_p95": {
+    "median": 1312100,
+    "min": 1312100,
+    "max": 1312100,
+    "std_dev": 0
+  },
+  "latency_p99": {
+    "median": 2363400,
+    "min": 2363400,
+    "max": 2363400,
+    "std_dev": 0
+  },
+  "latency_p999": {
+    "median": 11532200,
+    "min": 11532200,
+    "max": 11532200,
+    "std_dev": 0
+  },
+  "latency_max": {
+    "median": 19032100,
+    "min": 19032100,
+    "max": 19032100,
+    "std_dev": 0
+  },
+  "overall_pass": true
+}

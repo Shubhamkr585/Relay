@@ -1,0 +1,602 @@
+[
+  {
+    "id": "b1_Unbatched (0ms/1-op)_c1_nsfalse",
+    "name": "B1: Unbatched (0ms/1-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "1",
+      "concurrency": "1",
+      "mode": "Unbatched (0ms/1-op)",
+      "nosync": "false",
+      "window": "0s"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000825500,
+        "total_ops": 1671,
+        "throughput": 556.8467743292638,
+        "latency": {
+          "count": 1671,
+          "min": 0,
+          "p50": 1624600,
+          "p95": 2751200,
+          "p99": 3329800,
+          "p999": 4903600,
+          "max": 20893400,
+          "mean": 1789916
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          557.0225222773174
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 2276 jobs pending in storage \u003e= 1671 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 556.8467743292638,
+      "min": 556.8467743292638,
+      "max": 556.8467743292638,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 1624600,
+      "min": 1624600,
+      "max": 1624600,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 2751200,
+      "min": 2751200,
+      "max": 2751200,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 3329800,
+      "min": 3329800,
+      "max": 3329800,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 4903600,
+      "min": 4903600,
+      "max": 4903600,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 20893400,
+      "min": 20893400,
+      "max": 20893400,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Unbatched (0ms/1-op)_c32_nsfalse",
+    "name": "B1: Unbatched (0ms/1-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "1",
+      "concurrency": "32",
+      "mode": "Unbatched (0ms/1-op)",
+      "nosync": "false",
+      "window": "0s"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000044500,
+        "total_ops": 1469,
+        "throughput": 489.65940338551644,
+        "latency": {
+          "count": 1469,
+          "min": 44412200,
+          "p50": 57938500,
+          "p95": 102646600,
+          "p99": 120032100,
+          "p999": 126990000,
+          "max": 127022100,
+          "mean": 64663201
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          498.70523356684777
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 2052 jobs pending in storage \u003e= 1469 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 489.65940338551644,
+      "min": 489.65940338551644,
+      "max": 489.65940338551644,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 57938500,
+      "min": 57938500,
+      "max": 57938500,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 102646600,
+      "min": 102646600,
+      "max": 102646600,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 120032100,
+      "min": 120032100,
+      "max": 120032100,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 126990000,
+      "min": 126990000,
+      "max": 126990000,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 127022100,
+      "min": 127022100,
+      "max": 127022100,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Group Commit (2ms/64-op)_c1_nsfalse",
+    "name": "B1: Group Commit (2ms/64-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "64",
+      "concurrency": "1",
+      "mode": "Group Commit (2ms/64-op)",
+      "nosync": "false",
+      "window": "2ms"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000316100,
+        "total_ops": 721,
+        "throughput": 240.30801287904296,
+        "latency": {
+          "count": 721,
+          "min": 2644300,
+          "p50": 4148000,
+          "p95": 4894600,
+          "p99": 5731500,
+          "p999": 28532300,
+          "max": 28532300,
+          "mean": 4148828
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          240.55969198483467
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 969 jobs pending in storage \u003e= 721 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 240.30801287904296,
+      "min": 240.30801287904296,
+      "max": 240.30801287904296,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 4148000,
+      "min": 4148000,
+      "max": 4148000,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 4894600,
+      "min": 4894600,
+      "max": 4894600,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 5731500,
+      "min": 5731500,
+      "max": 5731500,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 28532300,
+      "min": 28532300,
+      "max": 28532300,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 28532300,
+      "min": 28532300,
+      "max": 28532300,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Group Commit (2ms/64-op)_c32_nsfalse",
+    "name": "B1: Group Commit (2ms/64-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "64",
+      "concurrency": "32",
+      "mode": "Group Commit (2ms/64-op)",
+      "nosync": "false",
+      "window": "2ms"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000534200,
+        "total_ops": 9024,
+        "throughput": 3007.4644708265614,
+        "latency": {
+          "count": 9024,
+          "min": 6412500,
+          "p50": 10564400,
+          "p95": 12935600,
+          "p99": 14828900,
+          "p999": 30928800,
+          "max": 30928800,
+          "mean": 10600326
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          3005.9464375920516
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 12960 jobs pending in storage \u003e= 9024 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 3007.4644708265614,
+      "min": 3007.4644708265614,
+      "max": 3007.4644708265614,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 10564400,
+      "min": 10564400,
+      "max": 10564400,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 12935600,
+      "min": 12935600,
+      "max": 12935600,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 14828900,
+      "min": 14828900,
+      "max": 14828900,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 30928800,
+      "min": 30928800,
+      "max": 30928800,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 30928800,
+      "min": 30928800,
+      "max": 30928800,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Group Commit (2ms/64-op)_c1_nstrue",
+    "name": "B1: Group Commit (2ms/64-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "64",
+      "concurrency": "1",
+      "mode": "Group Commit (2ms/64-op)",
+      "nosync": "true",
+      "window": "2ms"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000485000,
+        "total_ops": 1148,
+        "throughput": 382.6048122220241,
+        "latency": {
+          "count": 1148,
+          "min": 1609600,
+          "p50": 2592100,
+          "p95": 3135700,
+          "p99": 3617300,
+          "p999": 4374900,
+          "max": 4810600,
+          "mean": 2609859
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          382.7374348183646
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 1529 jobs pending in storage \u003e= 1148 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 382.6048122220241,
+      "min": 382.6048122220241,
+      "max": 382.6048122220241,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 2592100,
+      "min": 2592100,
+      "max": 2592100,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 3135700,
+      "min": 3135700,
+      "max": 3135700,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 3617300,
+      "min": 3617300,
+      "max": 3617300,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 4374900,
+      "min": 4374900,
+      "max": 4374900,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 4810600,
+      "min": 4810600,
+      "max": 4810600,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Group Commit (2ms/64-op)_c32_nstrue",
+    "name": "B1: Group Commit (2ms/64-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "64",
+      "concurrency": "32",
+      "mode": "Group Commit (2ms/64-op)",
+      "nosync": "true",
+      "window": "2ms"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3001195700,
+        "total_ops": 23483,
+        "throughput": 7824.548062627173,
+        "latency": {
+          "count": 23483,
+          "min": 2004400,
+          "p50": 4117600,
+          "p95": 5363700,
+          "p99": 6012400,
+          "p999": 7170600,
+          "max": 7703800,
+          "mean": 4085700
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          7766.8609478871185
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 31995 jobs pending in storage \u003e= 23483 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 7824.548062627173,
+      "min": 7824.548062627173,
+      "max": 7824.548062627173,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 4117600,
+      "min": 4117600,
+      "max": 4117600,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 5363700,
+      "min": 5363700,
+      "max": 5363700,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 6012400,
+      "min": 6012400,
+      "max": 6012400,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 7170600,
+      "min": 7170600,
+      "max": 7170600,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 7703800,
+      "min": 7703800,
+      "max": 7703800,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Unbatched (0ms/1-op)_c1_nstrue",
+    "name": "B1: Unbatched (0ms/1-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "1",
+      "concurrency": "1",
+      "mode": "Unbatched (0ms/1-op)",
+      "nosync": "true",
+      "window": "0s"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000173100,
+        "total_ops": 16212,
+        "throughput": 5403.688207190445,
+        "latency": {
+          "count": 16212,
+          "min": 0,
+          "p50": 0,
+          "p95": 1068100,
+          "p99": 2285900,
+          "p999": 4634900,
+          "max": 9249500,
+          "mean": 183136
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          5342.216729303927
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 22682 jobs pending in storage \u003e= 16212 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 5403.688207190445,
+      "min": 5403.688207190445,
+      "max": 5403.688207190445,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 1068100,
+      "min": 1068100,
+      "max": 1068100,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 2285900,
+      "min": 2285900,
+      "max": 2285900,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 4634900,
+      "min": 4634900,
+      "max": 4634900,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 9249500,
+      "min": 9249500,
+      "max": 9249500,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b1_Unbatched (0ms/1-op)_c32_nstrue",
+    "name": "B1: Unbatched (0ms/1-op)",
+    "description": "Single-node BBoltEngine Enqueue workload",
+    "config": {
+      "batch_max": "1",
+      "concurrency": "32",
+      "mode": "Unbatched (0ms/1-op)",
+      "nosync": "true",
+      "window": "0s"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000483900,
+        "total_ops": 16383,
+        "throughput": 5460.1192827596915,
+        "latency": {
+          "count": 16383,
+          "min": 0,
+          "p50": 5330400,
+          "p95": 10564400,
+          "p99": 15300900,
+          "p999": 26208600,
+          "max": 27470700,
+          "mean": 5841929
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          5451.794826162519
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Sanity check passed: 21100 jobs pending in storage \u003e= 16383 acknowledged enqueues"
+      }
+    ],
+    "throughput": {
+      "median": 5460.1192827596915,
+      "min": 5460.1192827596915,
+      "max": 5460.1192827596915,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 5330400,
+      "min": 5330400,
+      "max": 5330400,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 10564400,
+      "min": 10564400,
+      "max": 10564400,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 15300900,
+      "min": 15300900,
+      "max": 15300900,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 26208600,
+      "min": 26208600,
+      "max": 26208600,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 27470700,
+      "min": 27470700,
+      "max": 27470700,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  }
+]

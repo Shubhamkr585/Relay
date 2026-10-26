@@ -1,0 +1,47 @@
+[
+  {
+    "id": "b5_failover_default",
+    "name": "B5: Leader Failover Latency (Production Defaults)",
+    "flags": "-heartbeat-timeout=1s -election-timeout=1s -leader-lease-timeout=500ms",
+    "trials_count": 3,
+    "trials": [
+      {
+        "trial": 1,
+        "killed_leader": "b5_failover_default-node-1",
+        "new_leader": "b5_failover_default-node-1",
+        "failover_duration": 7897100,
+        "pre_ack_count": 15,
+        "post_ack_count": 15,
+        "verified_lost_jobs": 0,
+        "pass": true
+      },
+      {
+        "trial": 2,
+        "killed_leader": "b5_failover_default-node-1",
+        "new_leader": "b5_failover_default-node-1",
+        "failover_duration": 16298500,
+        "pre_ack_count": 14,
+        "post_ack_count": 14,
+        "verified_lost_jobs": 0,
+        "pass": true
+      },
+      {
+        "trial": 3,
+        "killed_leader": "b5_failover_default-node-1",
+        "new_leader": "b5_failover_default-node-1",
+        "failover_duration": 22268400,
+        "pre_ack_count": 16,
+        "post_ack_count": 16,
+        "verified_lost_jobs": 0,
+        "pass": true
+      }
+    ],
+    "min_duration": 7897100,
+    "median_duration": 16298500,
+    "p95_duration": 0,
+    "p95_valid": false,
+    "max_duration": 22268400,
+    "total_lost_jobs": 0,
+    "overall_pass": true
+  }
+]

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+          cache: true
+
+      - name: Build All Packages
+        run: go build -v ./...
+
+      - name: Run Go Vet
+        run: go vet ./...
+
+      - name: Check Formatting (gofmt)
+        run: |
+          UNFORMATTED=$(gofmt -l .)
+          if [ -n "$UNFORMATTED" ]; then
+            echo "Error: Unformatted Go files found:"
+            echo "$UNFORMATTED"
+            exit 1
+          fi
+
+      - name: Run Race Tests
+        run: go test -v -race -count=1 -timeout 10m ./...
+
+      - name: Documentation Verification (docs-check)
+        run: go run ./scripts/docs-check
+
+      - name: Build Docker Image
+        run: docker build -t relay:ci .

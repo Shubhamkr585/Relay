@@ -1,0 +1,218 @@
+[
+  {
+    "id": "b3_openloop_25%",
+    "name": "B3: Open-Loop Latency (25%)",
+    "description": "Scheduled timeline open-loop latency measurement",
+    "config": {
+      "fraction": "25%",
+      "target_rate": "397"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000188600,
+        "total_ops": 1184,
+        "throughput": 394.64185684859945,
+        "latency": {
+          "count": 1184,
+          "min": 5939275,
+          "p50": 18483143,
+          "p95": 57529531,
+          "p99": 82165427,
+          "p999": 91899149,
+          "max": 94163221,
+          "mean": 23030848
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          401.11731499116
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Open-loop rate 397 req/s achieved 395 ops/sec (0 coordinated omission)"
+      }
+    ],
+    "throughput": {
+      "median": 394.64185684859945,
+      "min": 394.64185684859945,
+      "max": 394.64185684859945,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 18483143,
+      "min": 18483143,
+      "max": 18483143,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 57529531,
+      "min": 57529531,
+      "max": 57529531,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 82165427,
+      "min": 82165427,
+      "max": 82165427,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 91899149,
+      "min": 91899149,
+      "max": 91899149,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 94163221,
+      "min": 94163221,
+      "max": 94163221,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b3_openloop_50%",
+    "name": "B3: Open-Loop Latency (50%)",
+    "description": "Scheduled timeline open-loop latency measurement",
+    "config": {
+      "fraction": "50%",
+      "target_rate": "794"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 2996610600,
+        "total_ops": 2204,
+        "throughput": 735.4976318911773,
+        "latency": {
+          "count": 2204,
+          "min": 7950960,
+          "p50": 83512760,
+          "p95": 268347240,
+          "p99": 324493040,
+          "p999": 378243980,
+          "max": 383281420,
+          "mean": 111759197
+        },
+        "errors": 0,
+        "timeouts": 0,
+        "thermal_slices": [
+          744.2044906460519
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Open-loop rate 794 req/s achieved 735 ops/sec (0 coordinated omission)"
+      }
+    ],
+    "throughput": {
+      "median": 735.4976318911773,
+      "min": 735.4976318911773,
+      "max": 735.4976318911773,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 83512760,
+      "min": 83512760,
+      "max": 83512760,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 268347240,
+      "min": 268347240,
+      "max": 268347240,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 324493040,
+      "min": 324493040,
+      "max": 324493040,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 378243980,
+      "min": 378243980,
+      "max": 378243980,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 383281420,
+      "min": 383281420,
+      "max": 383281420,
+      "std_dev": 0
+    },
+    "overall_pass": true
+  },
+  {
+    "id": "b3_openloop_80%",
+    "name": "B3: Open-Loop Latency (80%)",
+    "description": "Scheduled timeline open-loop latency measurement",
+    "config": {
+      "fraction": "80%",
+      "target_rate": "1270"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3000843300,
+        "total_ops": 3158,
+        "throughput": 1052.3708452220746,
+        "latency": {
+          "count": 3158,
+          "min": 15776300,
+          "p50": 104485000,
+          "p95": 476868500,
+          "p99": 498555100,
+          "p999": 550879400,
+          "max": 562685900,
+          "mean": 183194222
+        },
+        "errors": 1,
+        "timeouts": 0,
+        "thermal_slices": [
+          1092.6211639197118
+        ],
+        "rss_bytes": 0,
+        "sanity_pass": true,
+        "sanity_note": "Open-loop rate 1270 req/s achieved 1052 ops/sec (0 coordinated omission)"
+      }
+    ],
+    "throughput": {
+      "median": 1052.3708452220746,
+      "min": 1052.3708452220746,
+      "max": 1052.3708452220746,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 104485000,
+      "min": 104485000,
+      "max": 104485000,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 476868500,
+      "min": 476868500,
+      "max": 476868500,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 498555100,
+      "min": 498555100,
+      "max": 498555100,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 550879400,
+      "min": 550879400,
+      "max": 550879400,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 562685900,
+      "min": 562685900,
+      "max": 562685900,
+      "std_dev": 0
+    },
+    "overall_pass": false
+  }
+]

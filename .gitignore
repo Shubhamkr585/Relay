@@ -1,0 +1,32 @@
+# Compiled Binaries
+bin/
+*.exe
+*.test
+
+# Local Databases and Storage
+data/
+*.db
+
+# Chaos Output Logs (keep reports and summaries only)
+chaos-results/*-output.txt
+chaos-results/*/*-output.txt
+chaos-results/*.out
+chaos-results/subprocess-output.txt
+/chaos-report.txt
+/internal/chaos/chaos-report.txt
+
+# Local Development Notes and Extraction
+RESUME_NUMBERS.md
+resume-numbers.json
+INTERVIEW_NOTES.md
+*.local.md
+*.prompt.md
+prompt*.md
+phase*/
+gemini-code-*.md
+
+# Operating System and IDE Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,552 @@
+[
+  {
+    "id": "b4_e2e_unthrottled_w8",
+    "name": "B4: End-to-End Flow",
+    "description": "Concurrent producers and workers measuring full lifecycle latency and throughput",
+    "config": {
+      "backlog": "0",
+      "mode": "Unthrottled Producers",
+      "producers": "8",
+      "workers": "8"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 4639474700,
+        "total_ops": 1132,
+        "throughput": 243.9931399992331,
+        "latency": {
+          "count": 1132,
+          "min": 48462200,
+          "p50": 1548942600,
+          "p95": 2052346500,
+          "p99": 2083256300,
+          "p999": 2094022100,
+          "max": 2098561800,
+          "mean": 1321567275
+        },
+        "unreliable": false,
+        "errors": 0,
+        "timeouts": 0,
+        "retries": 0,
+        "thermal_slices": [
+          246.59733258802268
+        ],
+        "rss_bytes": 0,
+        "producers": 8,
+        "workers": 8,
+        "sanity_pass": true,
+        "sanity_note": "E2E flow: 1132 completed out of 1124 enqueued (backlog: 0)",
+        "littles_law_consistent": false
+      }
+    ],
+    "throughput": {
+      "median": 243.9931399992331,
+      "min": 243.9931399992331,
+      "max": 243.9931399992331,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 1548942600,
+      "min": 1548942600,
+      "max": 1548942600,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 2052346500,
+      "min": 2052346500,
+      "max": 2052346500,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 2083256300,
+      "min": 2083256300,
+      "max": 2083256300,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 2094022100,
+      "min": 2094022100,
+      "max": 2094022100,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 2098561800,
+      "min": 2098561800,
+      "max": 2098561800,
+      "std_dev": 0
+    },
+    "unreliable": false,
+    "batch_mean": {
+      "median": 4098475,
+      "min": 4098475,
+      "max": 4098475,
+      "std_dev": 0
+    },
+    "total_errors": 0,
+    "total_timeouts": 0,
+    "total_retries": 0,
+    "littles_law_consistent": false,
+    "littles_law_note": "INCONSISTENT (measured mean 1.32s vs expected 32.79ms, ratio 40.31x)",
+    "overall_pass": true
+  },
+  {
+    "id": "b4_e2e_unthrottled_w32",
+    "name": "B4: End-to-End Flow",
+    "description": "Concurrent producers and workers measuring full lifecycle latency and throughput",
+    "config": {
+      "backlog": "11",
+      "mode": "Unthrottled Producers",
+      "producers": "8",
+      "workers": "32"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 5999460200,
+        "total_ops": 73,
+        "throughput": 12.167761359596986,
+        "latency": {
+          "count": 73,
+          "min": 45223400,
+          "p50": 97275500,
+          "p95": 129631400,
+          "p99": 161254600,
+          "p999": 161254600,
+          "max": 161254600,
+          "mean": 96925549
+        },
+        "unreliable": false,
+        "errors": 67,
+        "timeouts": 0,
+        "retries": 0,
+        "thermal_slices": [
+          12.328312208798511
+        ],
+        "rss_bytes": 0,
+        "backlog": 11,
+        "producers": 8,
+        "workers": 32,
+        "sanity_pass": true,
+        "sanity_note": "E2E flow: 73 completed out of 84 enqueued (backlog: 11)",
+        "littles_law_consistent": false
+      }
+    ],
+    "throughput": {
+      "median": 12.167761359596986,
+      "min": 12.167761359596986,
+      "max": 12.167761359596986,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 97275500,
+      "min": 97275500,
+      "max": 97275500,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 129631400,
+      "min": 129631400,
+      "max": 129631400,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 161254600,
+      "min": 161254600,
+      "max": 161254600,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 161254600,
+      "min": 161254600,
+      "max": 161254600,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 161254600,
+      "min": 161254600,
+      "max": 161254600,
+      "std_dev": 0
+    },
+    "unreliable": false,
+    "batch_mean": {
+      "median": 82184386,
+      "min": 82184386,
+      "max": 82184386,
+      "std_dev": 0
+    },
+    "total_errors": 67,
+    "total_timeouts": 0,
+    "total_retries": 0,
+    "littles_law_consistent": false,
+    "littles_law_note": "INCONSISTENT (measured mean 96.92ms vs expected 2.63s, ratio 0.04x)",
+    "overall_pass": false
+  },
+  {
+    "id": "b4_e2e_unthrottled_w64",
+    "name": "B4: End-to-End Flow",
+    "description": "Concurrent producers and workers measuring full lifecycle latency and throughput",
+    "config": {
+      "backlog": "0",
+      "mode": "Unthrottled Producers",
+      "producers": "8",
+      "workers": "64"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 4590334300,
+        "total_ops": 0,
+        "throughput": 0,
+        "latency": {
+          "count": 0,
+          "min": 0,
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "p999": 0,
+          "max": 0,
+          "mean": 0
+        },
+        "unreliable": false,
+        "errors": 855,
+        "timeouts": 0,
+        "retries": 0,
+        "thermal_slices": [],
+        "rss_bytes": 0,
+        "producers": 8,
+        "workers": 64,
+        "sanity_pass": false,
+        "sanity_note": "E2E flow: 0 completed out of 0 enqueued (backlog: 0)",
+        "littles_law_consistent": false
+      }
+    ],
+    "throughput": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "unreliable": true,
+    "batch_mean": {
+      "median": 0,
+      "min": 0,
+      "max": 0,
+      "std_dev": 0
+    },
+    "total_errors": 855,
+    "total_timeouts": 0,
+    "total_retries": 0,
+    "littles_law_consistent": true,
+    "overall_pass": false
+  },
+  {
+    "id": "b4_e2e_ratelimited_w8",
+    "name": "B4: End-to-End Flow (Rate-Limited)",
+    "description": "Rate-limited producers preventing backlog saturation to measure true service latency",
+    "config": {
+      "achieved_rate": "64",
+      "backlog": "0",
+      "mode": "Rate-Limited (50% Capacity)",
+      "offered_rate": "122",
+      "producers": "8",
+      "workers": "8"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3030253200,
+        "total_ops": 195,
+        "throughput": 64.35105818880085,
+        "latency": {
+          "count": 195,
+          "min": 48402000,
+          "p50": 75849900,
+          "p95": 403397100,
+          "p99": 468327300,
+          "p999": 468327300,
+          "max": 468327300,
+          "mean": 112985267
+        },
+        "unreliable": false,
+        "errors": 5,
+        "timeouts": 0,
+        "retries": 0,
+        "thermal_slices": [
+          68.62783914690317
+        ],
+        "rss_bytes": 0,
+        "producers": 8,
+        "workers": 8,
+        "sanity_pass": true,
+        "sanity_note": "E2E flow: 195 completed out of 195 enqueued (backlog: 0)",
+        "littles_law_consistent": false
+      }
+    ],
+    "throughput": {
+      "median": 64.35105818880085,
+      "min": 64.35105818880085,
+      "max": 64.35105818880085,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 75849900,
+      "min": 75849900,
+      "max": 75849900,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 403397100,
+      "min": 403397100,
+      "max": 403397100,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 468327300,
+      "min": 468327300,
+      "max": 468327300,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 468327300,
+      "min": 468327300,
+      "max": 468327300,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 468327300,
+      "min": 468327300,
+      "max": 468327300,
+      "std_dev": 0
+    },
+    "unreliable": false,
+    "batch_mean": {
+      "median": 15539760,
+      "min": 15539760,
+      "max": 15539760,
+      "std_dev": 0
+    },
+    "total_errors": 5,
+    "total_timeouts": 0,
+    "total_retries": 0,
+    "littles_law_consistent": true,
+    "littles_law_note": "Consistent (measured mean 112.98ms vs expected 124.32ms, ratio 0.91x)",
+    "overall_pass": false
+  },
+  {
+    "id": "b4_e2e_ratelimited_w32",
+    "name": "B4: End-to-End Flow (Rate-Limited)",
+    "description": "Rate-limited producers preventing backlog saturation to measure true service latency",
+    "config": {
+      "achieved_rate": "4",
+      "backlog": "0",
+      "mode": "Rate-Limited (50% Capacity)",
+      "offered_rate": "6",
+      "producers": "8",
+      "workers": "32"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 4113021900,
+        "total_ops": 16,
+        "throughput": 3.8900838334947845,
+        "latency": {
+          "count": 16,
+          "min": 59065400,
+          "p50": 94525700,
+          "p95": 122607800,
+          "p99": 122607800,
+          "p999": 122607800,
+          "max": 122607800,
+          "mean": 87426343
+        },
+        "unreliable": false,
+        "errors": 0,
+        "timeouts": 0,
+        "retries": 0,
+        "thermal_slices": [
+          5.919193391516538
+        ],
+        "rss_bytes": 0,
+        "producers": 8,
+        "workers": 32,
+        "sanity_pass": true,
+        "sanity_note": "E2E flow: 16 completed out of 16 enqueued (backlog: 0)",
+        "littles_law_consistent": false
+      }
+    ],
+    "throughput": {
+      "median": 3.8900838334947845,
+      "min": 3.8900838334947845,
+      "max": 3.8900838334947845,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 94525700,
+      "min": 94525700,
+      "max": 94525700,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 122607800,
+      "min": 122607800,
+      "max": 122607800,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 122607800,
+      "min": 122607800,
+      "max": 122607800,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 122607800,
+      "min": 122607800,
+      "max": 122607800,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 122607800,
+      "min": 122607800,
+      "max": 122607800,
+      "std_dev": 0
+    },
+    "unreliable": false,
+    "batch_mean": {
+      "median": 257063868,
+      "min": 257063868,
+      "max": 257063868,
+      "std_dev": 0
+    },
+    "total_errors": 0,
+    "total_timeouts": 0,
+    "total_retries": 0,
+    "littles_law_consistent": false,
+    "littles_law_note": "INCONSISTENT (measured mean 87.43ms vs expected 8.23s, ratio 0.01x)",
+    "overall_pass": true
+  },
+  {
+    "id": "b4_e2e_ratelimited_w64",
+    "name": "B4: End-to-End Flow (Rate-Limited)",
+    "description": "Rate-limited producers preventing backlog saturation to measure true service latency",
+    "config": {
+      "achieved_rate": "16",
+      "backlog": "0",
+      "mode": "Rate-Limited (50% Capacity)",
+      "offered_rate": "50",
+      "producers": "8",
+      "workers": "64"
+    },
+    "repetitions": [
+      {
+        "repetition": 1,
+        "duration": 3457245800,
+        "total_ops": 56,
+        "throughput": 16.19786478589402,
+        "latency": {
+          "count": 56,
+          "min": 236203700,
+          "p50": 531354300,
+          "p95": 912337200,
+          "p99": 955103300,
+          "p999": 955103300,
+          "max": 955103300,
+          "mean": 568171703
+        },
+        "unreliable": false,
+        "errors": 0,
+        "timeouts": 0,
+        "retries": 0,
+        "thermal_slices": [
+          22.13159597143301
+        ],
+        "rss_bytes": 0,
+        "producers": 8,
+        "workers": 64,
+        "sanity_pass": true,
+        "sanity_note": "E2E flow: 56 completed out of 56 enqueued (backlog: 0)",
+        "littles_law_consistent": false
+      }
+    ],
+    "throughput": {
+      "median": 16.19786478589402,
+      "min": 16.19786478589402,
+      "max": 16.19786478589402,
+      "std_dev": 0
+    },
+    "latency_p50": {
+      "median": 531354300,
+      "min": 531354300,
+      "max": 531354300,
+      "std_dev": 0
+    },
+    "latency_p95": {
+      "median": 912337200,
+      "min": 912337200,
+      "max": 912337200,
+      "std_dev": 0
+    },
+    "latency_p99": {
+      "median": 955103300,
+      "min": 955103300,
+      "max": 955103300,
+      "std_dev": 0
+    },
+    "latency_p999": {
+      "median": 955103300,
+      "min": 955103300,
+      "max": 955103300,
+      "std_dev": 0
+    },
+    "latency_max": {
+      "median": 955103300,
+      "min": 955103300,
+      "max": 955103300,
+      "std_dev": 0
+    },
+    "unreliable": false,
+    "batch_mean": {
+      "median": 61736532,
+      "min": 61736532,
+      "max": 61736532,
+      "std_dev": 0
+    },
+    "total_errors": 0,
+    "total_timeouts": 0,
+    "total_retries": 0,
+    "littles_law_consistent": false,
+    "littles_law_note": "INCONSISTENT (measured mean 568.17ms vs expected 3.95s, ratio 0.14x)",
+    "overall_pass": true
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "b5_failover_default",
+    "name": "B5: Leader Failover Latency (Production Defaults)",
+    "flags": "-heartbeat-timeout=1s -election-timeout=1s -leader-lease-timeout=500ms",
+    "trials_count": 3,
+    "valid_trials_count": 3,
+    "trials": [
+      {
+        "trial": 1,
+        "killed_leader": "b5_failover_default-node-1",
+        "new_leader": "b5_failover_default-node-3",
+        "failover_duration": 2355885900,
+        "pre_ack_count": 12,
+        "post_ack_count": 12,
+        "verified_lost_jobs": 0,
+        "valid": true,
+        "pass": true
+      },
+      {
+        "trial": 2,
+        "killed_leader": "b5_failover_default-node-3",
+        "new_leader": "b5_failover_default-node-1",
+        "failover_duration": 2501264500,
+        "pre_ack_count": 11,
+        "post_ack_count": 11,
+        "verified_lost_jobs": 0,
+        "valid": true,
+        "pass": true
+      },
+      {
+        "trial": 3,
+        "killed_leader": "b5_failover_default-node-1",
+        "new_leader": "b5_failover_default-node-2",
+        "failover_duration": 2523926500,
+        "pre_ack_count": 12,
+        "post_ack_count": 12,
+        "verified_lost_jobs": 0,
+        "valid": true,
+        "pass": true
+      }
+    ],
+    "expected_lower_bound": 1000000000,
+    "suspicious": false,
+    "min_duration": 2355885900,
+    "median_duration": 2501264500,
+    "p95_duration": 0,
+    "p95_valid": false,
+    "max_duration": 2523926500,
+    "total_lost_jobs": 0,
+    "overall_pass": true
+  },
+  {
+    "id": "b5_failover_aggressive",
+    "name": "B5: Leader Failover Latency (Aggressive Timeouts)",
+    "flags": "-heartbeat-timeout=100ms -election-timeout=300ms -leader-lease-timeout=100ms",
+    "trials_count": 3,
+    "valid_trials_count": 3,
+    "trials": [
+      {
+        "trial": 1,
+        "killed_leader": "b5_failover_aggressive-node-1",
+        "new_leader": "b5_failover_aggressive-node-3",
+        "failover_duration": 229759800,
+        "pre_ack_count": 18,
+        "post_ack_count": 18,
+        "verified_lost_jobs": 0,
+        "valid": true,
+        "pass": true
+      },
+      {
+        "trial": 2,
+        "killed_leader": "b5_failover_aggressive-node-3",
+        "new_leader": "b5_failover_aggressive-node-2",
+        "failover_duration": 178344800,
+        "pre_ack_count": 15,
+        "post_ack_count": 15,
+        "verified_lost_jobs": 0,
+        "valid": true,
+        "pass": true
+      },
+      {
+        "trial": 3,
+        "killed_leader": "b5_failover_aggressive-node-2",
+        "new_leader": "b5_failover_aggressive-node-3",
+        "failover_duration": 311514900,
+        "pre_ack_count": 18,
+        "post_ack_count": 18,
+        "verified_lost_jobs": 0,
+        "valid": true,
+        "pass": true
+      }
+    ],
+    "expected_lower_bound": 300000000,
+    "suspicious": true,
+    "min_duration": 178344800,
+    "median_duration": 229759800,
+    "p95_duration": 0,
+    "p95_valid": false,
+    "max_duration": 311514900,
+    "total_lost_jobs": 0,
+    "overall_pass": true
+  }
+]
