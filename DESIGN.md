@@ -25,6 +25,13 @@ In distributed systems with arbitrary network delays, worker crashes, and partit
 - Because Raft log indices are strictly monotonically increasing, any subsequent reservation of the same job generates a strictly higher token.
 - When an expired worker attempts to call `Ack` or `Nack`, [`internal/cluster/fsm.go`](file:///c:/Users/BIT/OneDrive/Desktop/projects/Relay/internal/cluster/fsm.go) detects the token mismatch against the active state in bbolt and rejects the mutation with `ErrStaleLease` (`codes.FailedPrecondition`).
 
+### 1.3 Consumer Idempotency Guidance & Duplicate Deliveries
+- **Delivery Guarantee:** Relay guarantees **at-least-once delivery**. A job is guaranteed to never be lost once acknowledged by quorum. However, if a worker reserves a job, executes the work, and subsequently crashes or is partitioned before completing `Ack`, its lease will eventually expire and the job will be safely redelivered to a healthy worker.
+- **Consumer-Side Idempotency Best Practices:**
+  1. **Atomic Side-Effects with Job Key:** Applications should use `job.Id` or `job.IdempotencyKey` as an idempotency key in their downstream database (e.g., `INSERT ... ON CONFLICT DO NOTHING` or unique transaction record).
+  2. **Monotonic Fencing Tokens:** Always include `lease_token` when calling `Ack` or `Nack`. If a worker took too long and its lease expired, the server will reject the stale acknowledgment, preventing expired workers from committing stale mutations.
+  3. **Verification in Chaos:** Under the chaos test harness, Relay continuously monitors and logs duplicate deliveries (`Redeliveries After Crash`), verifying under Invariant 5 (`Valid Duplicate Execution`) that duplicate executions strictly occur only following simulated worker crashes or lease expiration events.
+
 ---
 
 ## 2. Deterministic Raft Finite State Machine (FSM)
