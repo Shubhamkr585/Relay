@@ -798,3 +798,104 @@ func TestLinearizableReads_GetJobAndStats(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, int64(1), statsRes.PendingCount)
 }
+
+// TestQueueSemantics_ExtendLease_DLQ_RequeueDead verifies lease extension, max attempt DLQ movement,
+// list-dead, and requeue-dead end-to-end through the cluster.
+func TestQueueSemantics_ExtendLease_DLQ_RequeueDead(t *testing.T) {
+	tcs := newTestClusterServers(t)
+	defer tcs.Shutdown()
+
+	leader, err := tcs.tc.WaitForLeader(10 * time.Second)
+	require.NoError(t, err)
+
+	client := tcs.clients[leader.ID]
+	ctx := context.Background()
+	q := "dlq-requeue-q"
+
+	// 1. Enqueue with MaxAttempts = 2
+	enqRes, err := client.Enqueue(ctx, &relaypb.EnqueueRequest{
+		Queue:       q,
+		Payload:     []byte("dlq-payload"),
+		MaxAttempts: 2,
+	})
+	require.NoError(t, err)
+	jobID := enqRes.JobId
+
+	// 2. Reserve the job
+	res1, err := client.Reserve(ctx, &relaypb.ReserveRequest{
+		Queue:           q,
+		WorkerId:        "worker-1",
+		LeaseDurationMs: 5000,
+	})
+	require.NoError(t, err)
+	require.Equal(t, jobID, res1.Job.Id)
+	token1 := res1.LeaseToken
+
+	// 3. Extend Lease by 10s
+	extRes, err := client.ExtendLease(ctx, &relaypb.ExtendLeaseRequest{
+		JobId:           jobID,
+		LeaseToken:      token1,
+		ExtraDurationMs: 10000,
+	})
+	require.NoError(t, err)
+	require.Greater(t, extRes.NewLeaseExpiresAt, res1.Job.LeaseExpiresAt)
+
+	// Verify via GetJob that lease was extended
+	getJob1, err := client.GetJob(ctx, &relaypb.GetJobRequest{JobId: jobID})
+	require.NoError(t, err)
+	require.Equal(t, extRes.NewLeaseExpiresAt, getJob1.Job.LeaseExpiresAt)
+
+	// 4. Attempt 1 failure: Nack
+	_, err = client.Nack(ctx, &relaypb.NackRequest{
+		JobId:        jobID,
+		LeaseToken:   token1,
+		ErrorMsg:     "attempt 1 failed",
+		RetryAfterMs: 0,
+	})
+	require.NoError(t, err)
+
+	// 5. Reserve attempt 2
+	res2, err := client.Reserve(ctx, &relaypb.ReserveRequest{
+		Queue:           q,
+		WorkerId:        "worker-2",
+		LeaseDurationMs: 5000,
+	})
+	require.NoError(t, err)
+	require.Equal(t, uint32(2), res2.Job.Attempts)
+	token2 := res2.LeaseToken
+
+	// 6. Attempt 2 failure: Nack (reaches MaxAttempts = 2 -> must move to DLQ)
+	_, err = client.Nack(ctx, &relaypb.NackRequest{
+		JobId:      jobID,
+		LeaseToken: token2,
+		ErrorMsg:   "fatal attempt 2 failed",
+	})
+	require.NoError(t, err)
+
+	// Verify via GetJob that job is DEAD
+	deadJob, err := client.GetJob(ctx, &relaypb.GetJobRequest{JobId: jobID})
+	require.NoError(t, err)
+	require.Equal(t, relaypb.JobState_JOB_STATE_DEAD, deadJob.Job.State)
+
+	// 7. ListDead must return the job
+	deadList, err := client.ListDead(ctx, &relaypb.ListDeadRequest{Queue: q, Limit: 10})
+	require.NoError(t, err)
+	require.Len(t, deadList.Jobs, 1)
+	require.Equal(t, jobID, deadList.Jobs[0].Id)
+
+	// 8. RequeueDead moves job back to PENDING and resets attempts
+	requeueRes, err := client.RequeueDead(ctx, &relaypb.RequeueDeadRequest{JobId: jobID})
+	require.NoError(t, err)
+	require.Equal(t, relaypb.JobState_JOB_STATE_PENDING, requeueRes.Job.State)
+	require.Equal(t, uint32(0), requeueRes.Job.Attempts)
+
+	// 9. Can now be reserved again!
+	res3, err := client.Reserve(ctx, &relaypb.ReserveRequest{
+		Queue:           q,
+		WorkerId:        "worker-3",
+		LeaseDurationMs: 5000,
+	})
+	require.NoError(t, err)
+	require.Equal(t, jobID, res3.Job.Id)
+	require.Equal(t, uint32(1), res3.Job.Attempts)
+}
