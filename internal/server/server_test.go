@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"reflect"
 	"strings"
 	"sync"
 	"testing"
@@ -898,4 +899,89 @@ func TestQueueSemantics_ExtendLease_DLQ_RequeueDead(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, jobID, res3.Job.Id)
 	require.Equal(t, uint32(1), res3.Job.Attempts)
+}
+
+// TestClusterMembership_DynamicJoinNode verifies dynamically adding a 4th voter node
+// to an active 3-node cluster via client.Join, and asserting that the new node converges.
+func TestClusterMembership_DynamicJoinNode(t *testing.T) {
+	tcs := newTestClusterServers(t)
+	defer tcs.Shutdown()
+
+	leader, err := tcs.tc.WaitForLeader(10 * time.Second)
+	require.NoError(t, err)
+
+	client := tcs.clients[leader.ID]
+	ctx := context.Background()
+	q := "dynamic-join-q"
+
+	// 1. Enqueue some jobs before join
+	for i := 0; i < 5; i++ {
+		_, err := client.Enqueue(ctx, &relaypb.EnqueueRequest{
+			Queue:       q,
+			Payload:     []byte(fmt.Sprintf("before-join-%d", i)),
+			MaxAttempts: 3,
+		})
+		require.NoError(t, err)
+	}
+
+	// 2. Create node-4 dynamically (non-bootstrapped)
+	node4, err := tcs.tc.CreateNonBootstrapNode("node-4")
+	require.NoError(t, err)
+
+	// Start server on node-4
+	peerResolver := func(leaderID raft.ServerID, leaderRaftAddr raft.ServerAddress) (string, error) {
+		if addr, ok := tcs.grpcAddrs[string(leaderID)]; ok {
+			return addr, nil
+		}
+		return "", fmt.Errorf("leader %s not found in grpcAddrs", leaderID)
+	}
+	srv4 := server.NewServer(server.ServerConfig{
+		NodeID:       "node-4",
+		PeerResolver: peerResolver,
+	}, node4.Raft, node4.FSM, node4.Batcher, nil, nil)
+	require.NoError(t, srv4.Start("127.0.0.1:0", "127.0.0.1:0"))
+	tcs.servers["node-4"] = srv4
+	tcs.grpcAddrs["node-4"] = srv4.GRPCAddr()
+
+	conn4, err := grpc.NewClient(srv4.GRPCAddr(), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	require.NoError(t, err)
+	tcs.conns["node-4"] = conn4
+	tcs.clients["node-4"] = relaypb.NewRelayServiceClient(conn4)
+
+	// 3. Request Join through leader client
+	joinRes, err := client.Join(ctx, &relaypb.JoinRequest{
+		NodeId:      "node-4",
+		RaftAddress: string(node4.Transport.LocalAddr()),
+	})
+	require.NoError(t, err)
+	require.True(t, joinRes.Success)
+
+	// 4. Assert node-4 is now in the Raft configuration as a voter
+	cfgFuture := leader.Raft.GetConfiguration()
+	require.NoError(t, cfgFuture.Error())
+	var foundNode4 bool
+	for _, srv := range cfgFuture.Configuration().Servers {
+		if srv.ID == "node-4" {
+			foundNode4 = true
+			break
+		}
+	}
+	require.True(t, foundNode4, "node-4 must be registered in Raft configuration")
+
+	// 5. Enqueue more jobs to exercise replication with the newly added node
+	for i := 5; i < 10; i++ {
+		_, err := client.Enqueue(ctx, &relaypb.EnqueueRequest{
+			Queue:       q,
+			Payload:     []byte(fmt.Sprintf("after-join-%d", i)),
+			MaxAttempts: 3,
+		})
+		require.NoError(t, err)
+	}
+
+	// 6. Assert node-4 converges to exact same state as leader
+	require.Eventually(t, func() bool {
+		dumpLeader, err1 := tcs.tc.StateDump(leader.ID)
+		dump4, err2 := tcs.tc.StateDump("node-4")
+		return err1 == nil && err2 == nil && reflect.DeepEqual(dumpLeader, dump4)
+	}, 10*time.Second, 100*time.Millisecond, "node-4 must replicate state and converge with leader")
 }

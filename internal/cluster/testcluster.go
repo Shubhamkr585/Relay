@@ -408,6 +408,35 @@ func (tc *TestCluster) RestartNode(id string) error {
 	return nil
 }
 
+// CreateNonBootstrapNode initializes a new unbootstrapped node and interconnects its transport to all existing nodes.
+func (tc *TestCluster) CreateNonBootstrapNode(id string) (*ClusterNode, error) {
+	tc.mu.Lock()
+	defer tc.mu.Unlock()
+
+	_, trans := raft.NewInmemTransport(raft.ServerAddress(id))
+	tc.transports[id] = trans
+
+	// Connect new transport with all existing nodes
+	for existingID, existingTrans := range tc.transports {
+		if existingID != id {
+			trans.Connect(existingTrans.LocalAddr(), existingTrans)
+			existingTrans.Connect(trans.LocalAddr(), trans)
+		}
+	}
+
+	nodeDir := filepath.Join(tc.baseDir, id)
+	if err := os.MkdirAll(nodeDir, 0755); err != nil {
+		return nil, err
+	}
+
+	node, err := tc.createAndStartNode(id, nodeDir, trans, 0, 0, false, raft.Configuration{})
+	if err != nil {
+		return nil, err
+	}
+	tc.Nodes[id] = node
+	return node, nil
+}
+
 // StateDump dumps all buckets as sorted (key, value) pairs for byte-for-byte cluster consistency testing.
 func (tc *TestCluster) StateDump(id string) (map[string][]KVPair, error) {
 	tc.mu.RLock()
