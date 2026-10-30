@@ -546,3 +546,18 @@ func (f *FSM) ListDead(queue string, limit uint32) ([]*domain.Job, error) {
 	})
 	return deadJobs, err
 }
+
+// GetJob returns a job by ID from local FSM state.
+func (f *FSM) GetJob(jobID string) (*domain.Job, error) {
+	f.mu.RLock()
+	db := f.db
+	f.mu.RUnlock()
+
+	var job *domain.Job
+	err := db.View(func(tx *bbolt.Tx) error {
+		var err error
+		job, err = store.TxGetJob(tx, jobID)
+		return err
+	})
+	return job, err
+}

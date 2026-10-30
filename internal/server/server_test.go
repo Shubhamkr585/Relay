@@ -753,3 +753,48 @@ func TestFollowerForwarding_LeaderFailover_RedialsNewLeader(t *testing.T) {
 		return err == nil
 	}, 10*time.Second, 200*time.Millisecond, "Follower forwarding must succeed after failover")
 }
+
+// TestLinearizableReads_GetJobAndStats verifies that linearizable reads route through the leader
+// and verify leadership before returning FSM state.
+func TestLinearizableReads_GetJobAndStats(t *testing.T) {
+	tcs := newTestClusterServers(t)
+	defer tcs.Shutdown()
+
+	leader, err := tcs.tc.WaitForLeader(10 * time.Second)
+	require.NoError(t, err)
+
+	var followerID string
+	for id := range tcs.servers {
+		if id != leader.ID {
+			followerID = id
+			break
+		}
+	}
+	followerClient := tcs.clients[followerID]
+	ctx := context.Background()
+	q := "linearizable-read-q"
+
+	// Enqueue a job via follower (forwarded to leader)
+	enqRes, err := followerClient.Enqueue(ctx, &relaypb.EnqueueRequest{
+		Queue:       q,
+		Payload:     []byte("test-linearizable-payload"),
+		Priority:    10,
+		MaxAttempts: 3,
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, enqRes.JobId)
+
+	// Call GetJob on follower -> transparently forwarded to leader, verifies leadership, returns job
+	getRes, err := followerClient.GetJob(ctx, &relaypb.GetJobRequest{JobId: enqRes.JobId})
+	require.NoError(t, err)
+	require.Equal(t, enqRes.JobId, getRes.Job.Id)
+	require.Equal(t, q, getRes.Job.Queue)
+	require.Equal(t, []byte("test-linearizable-payload"), getRes.Job.Payload)
+	require.Equal(t, uint32(10), getRes.Job.Priority)
+	require.Equal(t, relaypb.JobState_JOB_STATE_PENDING, getRes.Job.State)
+
+	// Call Stats on follower -> forwarded to leader, verifies leadership
+	statsRes, err := followerClient.Stats(ctx, &relaypb.StatsRequest{Queue: q})
+	require.NoError(t, err)
+	require.Equal(t, int64(1), statsRes.PendingCount)
+}

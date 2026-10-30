@@ -43,6 +43,7 @@ func main() {
 		heartbeatTimeout   = flag.Duration("heartbeat-timeout", 1000*time.Millisecond, "Raft heartbeat timeout")
 		electionTimeout    = flag.Duration("election-timeout", 1000*time.Millisecond, "Raft election timeout")
 		leaderLeaseTimeout = flag.Duration("leader-lease-timeout", 500*time.Millisecond, "Raft leader lease timeout")
+		staleReads         = flag.Bool("stale-reads", getEnv("RELAY_STALE_READS", "false") == "true", "Serve reads locally without Raft leader verification (may return stale data)")
 	)
 	flag.Parse()
 
@@ -193,6 +194,7 @@ func main() {
 		GRPCAddr:     *grpcAddr,
 		HTTPAddr:     *httpAddr,
 		PeerResolver: peerResolver,
+		StaleReads:   *staleReads,
 	}
 	srv := server.NewServer(srvCfg, r, fsm, batcher, metrics, logger)
 

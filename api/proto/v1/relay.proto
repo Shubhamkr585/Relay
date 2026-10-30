@@ -108,6 +108,14 @@ message RequeueDeadResponse {
   Job job = 1;
 }
 
+message GetJobRequest {
+  string job_id = 1;
+}
+
+message GetJobResponse {
+  Job job = 1;
+}
+
 message JoinRequest {
   string node_id = 1;
   string raft_address = 2;
@@ -159,6 +167,7 @@ service RelayService {
   rpc Stats(StatsRequest) returns (StatsResponse);
   rpc ListDead(ListDeadRequest) returns (ListDeadResponse);
   rpc RequeueDead(RequeueDeadRequest) returns (RequeueDeadResponse);
+  rpc GetJob(GetJobRequest) returns (GetJobResponse);
   rpc Join(JoinRequest) returns (JoinResponse);
 }
 

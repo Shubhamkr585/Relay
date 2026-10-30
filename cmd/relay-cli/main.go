@@ -237,6 +237,32 @@ func main() {
 		out, _ := json.MarshalIndent(res, "", "  ")
 		fmt.Println(string(out))
 
+	case "get":
+		fs := flag.NewFlagSet("get", flag.ExitOnError)
+		serverFlag := fs.String("server", serverAddr, "Relay gRPC server address")
+		jobID := fs.String("job-id", "", "Job ID to retrieve")
+		_ = fs.Parse(os.Args[2:])
+
+		if *serverFlag != serverAddr {
+			conn.Close()
+			conn, _ = grpc.NewClient(*serverFlag, grpc.WithTransportCredentials(insecure.NewCredentials()))
+			client = relaypb.NewRelayServiceClient(conn)
+		}
+
+		if *jobID == "" {
+			fmt.Fprintln(os.Stderr, "Error: --job-id is required")
+			os.Exit(1)
+		}
+
+		res, err := client.GetJob(ctx, &relaypb.GetJobRequest{JobId: *jobID})
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "GetJob error: %v\n", err)
+			os.Exit(1)
+		}
+
+		out, _ := json.MarshalIndent(res, "", "  ")
+		fmt.Println(string(out))
+
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", command)
 		printUsage()
@@ -256,6 +282,7 @@ Available Commands:
   ack           Acknowledge job completion
   nack          Negatively acknowledge job (retry or fail)
   stats         Retrieve queue statistics
+  get           Retrieve job details by ID
   list-dead     List dead-lettered jobs
   requeue-dead  Move a dead job back to pending
 

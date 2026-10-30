@@ -1138,6 +1138,94 @@ func (x *RequeueDeadResponse) GetJob() *Job {
 	return nil
 }
 
+type GetJobRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	JobId         string                 `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetJobRequest) Reset() {
+	*x = GetJobRequest{}
+	mi := &file_api_proto_v1_relay_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetJobRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetJobRequest) ProtoMessage() {}
+
+func (x *GetJobRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_relay_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetJobRequest.ProtoReflect.Descriptor instead.
+func (*GetJobRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetJobRequest) GetJobId() string {
+	if x != nil {
+		return x.JobId
+	}
+	return ""
+}
+
+type GetJobResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Job           *Job                   `protobuf:"bytes,1,opt,name=job,proto3" json:"job,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetJobResponse) Reset() {
+	*x = GetJobResponse{}
+	mi := &file_api_proto_v1_relay_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetJobResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetJobResponse) ProtoMessage() {}
+
+func (x *GetJobResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_relay_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetJobResponse.ProtoReflect.Descriptor instead.
+func (*GetJobResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetJobResponse) GetJob() *Job {
+	if x != nil {
+		return x.Job
+	}
+	return nil
+}
+
 type JoinRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NodeId        string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
@@ -1148,7 +1236,7 @@ type JoinRequest struct {
 
 func (x *JoinRequest) Reset() {
 	*x = JoinRequest{}
-	mi := &file_api_proto_v1_relay_proto_msgTypes[17]
+	mi := &file_api_proto_v1_relay_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1160,7 +1248,7 @@ func (x *JoinRequest) String() string {
 func (*JoinRequest) ProtoMessage() {}
 
 func (x *JoinRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_v1_relay_proto_msgTypes[17]
+	mi := &file_api_proto_v1_relay_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1173,7 +1261,7 @@ func (x *JoinRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JoinRequest.ProtoReflect.Descriptor instead.
 func (*JoinRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{17}
+	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *JoinRequest) GetNodeId() string {
@@ -1199,7 +1287,7 @@ type JoinResponse struct {
 
 func (x *JoinResponse) Reset() {
 	*x = JoinResponse{}
-	mi := &file_api_proto_v1_relay_proto_msgTypes[18]
+	mi := &file_api_proto_v1_relay_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1211,7 +1299,7 @@ func (x *JoinResponse) String() string {
 func (*JoinResponse) ProtoMessage() {}
 
 func (x *JoinResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_v1_relay_proto_msgTypes[18]
+	mi := &file_api_proto_v1_relay_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1224,7 +1312,7 @@ func (x *JoinResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JoinResponse.ProtoReflect.Descriptor instead.
 func (*JoinResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{18}
+	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *JoinResponse) GetSuccess() bool {
@@ -1255,7 +1343,7 @@ type RaftCommand struct {
 
 func (x *RaftCommand) Reset() {
 	*x = RaftCommand{}
-	mi := &file_api_proto_v1_relay_proto_msgTypes[19]
+	mi := &file_api_proto_v1_relay_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1267,7 +1355,7 @@ func (x *RaftCommand) String() string {
 func (*RaftCommand) ProtoMessage() {}
 
 func (x *RaftCommand) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_v1_relay_proto_msgTypes[19]
+	mi := &file_api_proto_v1_relay_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1280,7 +1368,7 @@ func (x *RaftCommand) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RaftCommand.ProtoReflect.Descriptor instead.
 func (*RaftCommand) Descriptor() ([]byte, []int) {
-	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{19}
+	return file_api_proto_v1_relay_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *RaftCommand) GetType() CommandType {
@@ -1446,6 +1534,10 @@ const file_api_proto_v1_relay_proto_rawDesc = "" +
 	"\x12RequeueDeadRequest\x12\x15\n" +
 	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"6\n" +
 	"\x13RequeueDeadResponse\x12\x1f\n" +
+	"\x03job\x18\x01 \x01(\v2\r.relay.v1.JobR\x03job\"&\n" +
+	"\rGetJobRequest\x12\x15\n" +
+	"\x06job_id\x18\x01 \x01(\tR\x05jobId\"1\n" +
+	"\x0eGetJobResponse\x12\x1f\n" +
 	"\x03job\x18\x01 \x01(\v2\r.relay.v1.JobR\x03job\"I\n" +
 	"\vJoinRequest\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12!\n" +
@@ -1487,7 +1579,7 @@ const file_api_proto_v1_relay_proto_rawDesc = "" +
 	"\x1eCOMMAND_TYPE_PROMOTE_SCHEDULED\x10\b\x12\x16\n" +
 	"\x12COMMAND_TYPE_BATCH\x10\t\x12#\n" +
 	"\x1fCOMMAND_TYPE_PROMOTE_AND_EXPIRE\x10\n" +
-	"2\xc5\x04\n" +
+	"2\x82\x05\n" +
 	"\fRelayService\x12>\n" +
 	"\aEnqueue\x12\x18.relay.v1.EnqueueRequest\x1a\x19.relay.v1.EnqueueResponse\x12>\n" +
 	"\aReserve\x12\x18.relay.v1.ReserveRequest\x1a\x19.relay.v1.ReserveResponse\x122\n" +
@@ -1496,7 +1588,8 @@ const file_api_proto_v1_relay_proto_rawDesc = "" +
 	"\vExtendLease\x12\x1c.relay.v1.ExtendLeaseRequest\x1a\x1d.relay.v1.ExtendLeaseResponse\x128\n" +
 	"\x05Stats\x12\x16.relay.v1.StatsRequest\x1a\x17.relay.v1.StatsResponse\x12A\n" +
 	"\bListDead\x12\x19.relay.v1.ListDeadRequest\x1a\x1a.relay.v1.ListDeadResponse\x12J\n" +
-	"\vRequeueDead\x12\x1c.relay.v1.RequeueDeadRequest\x1a\x1d.relay.v1.RequeueDeadResponse\x125\n" +
+	"\vRequeueDead\x12\x1c.relay.v1.RequeueDeadRequest\x1a\x1d.relay.v1.RequeueDeadResponse\x12;\n" +
+	"\x06GetJob\x12\x17.relay.v1.GetJobRequest\x1a\x18.relay.v1.GetJobResponse\x125\n" +
 	"\x04Join\x12\x15.relay.v1.JoinRequest\x1a\x16.relay.v1.JoinResponseB4Z2github.com/shubhamkr585/relay/api/proto/v1;relaypbb\x06proto3"
 
 var (
@@ -1512,7 +1605,7 @@ func file_api_proto_v1_relay_proto_rawDescGZIP() []byte {
 }
 
 var file_api_proto_v1_relay_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_api_proto_v1_relay_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_api_proto_v1_relay_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_api_proto_v1_relay_proto_goTypes = []any{
 	(JobState)(0),               // 0: relay.v1.JobState
 	(CommandType)(0),            // 1: relay.v1.CommandType
@@ -1533,41 +1626,46 @@ var file_api_proto_v1_relay_proto_goTypes = []any{
 	(*ListDeadResponse)(nil),    // 16: relay.v1.ListDeadResponse
 	(*RequeueDeadRequest)(nil),  // 17: relay.v1.RequeueDeadRequest
 	(*RequeueDeadResponse)(nil), // 18: relay.v1.RequeueDeadResponse
-	(*JoinRequest)(nil),         // 19: relay.v1.JoinRequest
-	(*JoinResponse)(nil),        // 20: relay.v1.JoinResponse
-	(*RaftCommand)(nil),         // 21: relay.v1.RaftCommand
+	(*GetJobRequest)(nil),       // 19: relay.v1.GetJobRequest
+	(*GetJobResponse)(nil),      // 20: relay.v1.GetJobResponse
+	(*JoinRequest)(nil),         // 21: relay.v1.JoinRequest
+	(*JoinResponse)(nil),        // 22: relay.v1.JoinResponse
+	(*RaftCommand)(nil),         // 23: relay.v1.RaftCommand
 }
 var file_api_proto_v1_relay_proto_depIdxs = []int32{
 	0,  // 0: relay.v1.Job.state:type_name -> relay.v1.JobState
 	2,  // 1: relay.v1.ReserveResponse.job:type_name -> relay.v1.Job
 	2,  // 2: relay.v1.ListDeadResponse.jobs:type_name -> relay.v1.Job
 	2,  // 3: relay.v1.RequeueDeadResponse.job:type_name -> relay.v1.Job
-	1,  // 4: relay.v1.RaftCommand.type:type_name -> relay.v1.CommandType
-	2,  // 5: relay.v1.RaftCommand.job:type_name -> relay.v1.Job
-	21, // 6: relay.v1.RaftCommand.sub_commands:type_name -> relay.v1.RaftCommand
-	3,  // 7: relay.v1.RelayService.Enqueue:input_type -> relay.v1.EnqueueRequest
-	5,  // 8: relay.v1.RelayService.Reserve:input_type -> relay.v1.ReserveRequest
-	7,  // 9: relay.v1.RelayService.Ack:input_type -> relay.v1.AckRequest
-	9,  // 10: relay.v1.RelayService.Nack:input_type -> relay.v1.NackRequest
-	11, // 11: relay.v1.RelayService.ExtendLease:input_type -> relay.v1.ExtendLeaseRequest
-	13, // 12: relay.v1.RelayService.Stats:input_type -> relay.v1.StatsRequest
-	15, // 13: relay.v1.RelayService.ListDead:input_type -> relay.v1.ListDeadRequest
-	17, // 14: relay.v1.RelayService.RequeueDead:input_type -> relay.v1.RequeueDeadRequest
-	19, // 15: relay.v1.RelayService.Join:input_type -> relay.v1.JoinRequest
-	4,  // 16: relay.v1.RelayService.Enqueue:output_type -> relay.v1.EnqueueResponse
-	6,  // 17: relay.v1.RelayService.Reserve:output_type -> relay.v1.ReserveResponse
-	8,  // 18: relay.v1.RelayService.Ack:output_type -> relay.v1.AckResponse
-	10, // 19: relay.v1.RelayService.Nack:output_type -> relay.v1.NackResponse
-	12, // 20: relay.v1.RelayService.ExtendLease:output_type -> relay.v1.ExtendLeaseResponse
-	14, // 21: relay.v1.RelayService.Stats:output_type -> relay.v1.StatsResponse
-	16, // 22: relay.v1.RelayService.ListDead:output_type -> relay.v1.ListDeadResponse
-	18, // 23: relay.v1.RelayService.RequeueDead:output_type -> relay.v1.RequeueDeadResponse
-	20, // 24: relay.v1.RelayService.Join:output_type -> relay.v1.JoinResponse
-	16, // [16:25] is the sub-list for method output_type
-	7,  // [7:16] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	2,  // 4: relay.v1.GetJobResponse.job:type_name -> relay.v1.Job
+	1,  // 5: relay.v1.RaftCommand.type:type_name -> relay.v1.CommandType
+	2,  // 6: relay.v1.RaftCommand.job:type_name -> relay.v1.Job
+	23, // 7: relay.v1.RaftCommand.sub_commands:type_name -> relay.v1.RaftCommand
+	3,  // 8: relay.v1.RelayService.Enqueue:input_type -> relay.v1.EnqueueRequest
+	5,  // 9: relay.v1.RelayService.Reserve:input_type -> relay.v1.ReserveRequest
+	7,  // 10: relay.v1.RelayService.Ack:input_type -> relay.v1.AckRequest
+	9,  // 11: relay.v1.RelayService.Nack:input_type -> relay.v1.NackRequest
+	11, // 12: relay.v1.RelayService.ExtendLease:input_type -> relay.v1.ExtendLeaseRequest
+	13, // 13: relay.v1.RelayService.Stats:input_type -> relay.v1.StatsRequest
+	15, // 14: relay.v1.RelayService.ListDead:input_type -> relay.v1.ListDeadRequest
+	17, // 15: relay.v1.RelayService.RequeueDead:input_type -> relay.v1.RequeueDeadRequest
+	19, // 16: relay.v1.RelayService.GetJob:input_type -> relay.v1.GetJobRequest
+	21, // 17: relay.v1.RelayService.Join:input_type -> relay.v1.JoinRequest
+	4,  // 18: relay.v1.RelayService.Enqueue:output_type -> relay.v1.EnqueueResponse
+	6,  // 19: relay.v1.RelayService.Reserve:output_type -> relay.v1.ReserveResponse
+	8,  // 20: relay.v1.RelayService.Ack:output_type -> relay.v1.AckResponse
+	10, // 21: relay.v1.RelayService.Nack:output_type -> relay.v1.NackResponse
+	12, // 22: relay.v1.RelayService.ExtendLease:output_type -> relay.v1.ExtendLeaseResponse
+	14, // 23: relay.v1.RelayService.Stats:output_type -> relay.v1.StatsResponse
+	16, // 24: relay.v1.RelayService.ListDead:output_type -> relay.v1.ListDeadResponse
+	18, // 25: relay.v1.RelayService.RequeueDead:output_type -> relay.v1.RequeueDeadResponse
+	20, // 26: relay.v1.RelayService.GetJob:output_type -> relay.v1.GetJobResponse
+	22, // 27: relay.v1.RelayService.Join:output_type -> relay.v1.JoinResponse
+	18, // [18:28] is the sub-list for method output_type
+	8,  // [8:18] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_api_proto_v1_relay_proto_init() }
@@ -1581,7 +1679,7 @@ func file_api_proto_v1_relay_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_v1_relay_proto_rawDesc), len(file_api_proto_v1_relay_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   20,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -27,6 +27,7 @@ const (
 	RelayService_Stats_FullMethodName       = "/relay.v1.RelayService/Stats"
 	RelayService_ListDead_FullMethodName    = "/relay.v1.RelayService/ListDead"
 	RelayService_RequeueDead_FullMethodName = "/relay.v1.RelayService/RequeueDead"
+	RelayService_GetJob_FullMethodName      = "/relay.v1.RelayService/GetJob"
 	RelayService_Join_FullMethodName        = "/relay.v1.RelayService/Join"
 )
 
@@ -42,6 +43,7 @@ type RelayServiceClient interface {
 	Stats(ctx context.Context, in *StatsRequest, opts ...grpc.CallOption) (*StatsResponse, error)
 	ListDead(ctx context.Context, in *ListDeadRequest, opts ...grpc.CallOption) (*ListDeadResponse, error)
 	RequeueDead(ctx context.Context, in *RequeueDeadRequest, opts ...grpc.CallOption) (*RequeueDeadResponse, error)
+	GetJob(ctx context.Context, in *GetJobRequest, opts ...grpc.CallOption) (*GetJobResponse, error)
 	Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error)
 }
 
@@ -133,6 +135,16 @@ func (c *relayServiceClient) RequeueDead(ctx context.Context, in *RequeueDeadReq
 	return out, nil
 }
 
+func (c *relayServiceClient) GetJob(ctx context.Context, in *GetJobRequest, opts ...grpc.CallOption) (*GetJobResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetJobResponse)
+	err := c.cc.Invoke(ctx, RelayService_GetJob_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *relayServiceClient) Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(JoinResponse)
@@ -155,6 +167,7 @@ type RelayServiceServer interface {
 	Stats(context.Context, *StatsRequest) (*StatsResponse, error)
 	ListDead(context.Context, *ListDeadRequest) (*ListDeadResponse, error)
 	RequeueDead(context.Context, *RequeueDeadRequest) (*RequeueDeadResponse, error)
+	GetJob(context.Context, *GetJobRequest) (*GetJobResponse, error)
 	Join(context.Context, *JoinRequest) (*JoinResponse, error)
 	mustEmbedUnimplementedRelayServiceServer()
 }
@@ -189,6 +202,9 @@ func (UnimplementedRelayServiceServer) ListDead(context.Context, *ListDeadReques
 }
 func (UnimplementedRelayServiceServer) RequeueDead(context.Context, *RequeueDeadRequest) (*RequeueDeadResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RequeueDead not implemented")
+}
+func (UnimplementedRelayServiceServer) GetJob(context.Context, *GetJobRequest) (*GetJobResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetJob not implemented")
 }
 func (UnimplementedRelayServiceServer) Join(context.Context, *JoinRequest) (*JoinResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Join not implemented")
@@ -358,6 +374,24 @@ func _RelayService_RequeueDead_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RelayService_GetJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJobRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RelayServiceServer).GetJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RelayService_GetJob_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RelayServiceServer).GetJob(ctx, req.(*GetJobRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RelayService_Join_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(JoinRequest)
 	if err := dec(in); err != nil {
@@ -414,6 +448,10 @@ var RelayService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RequeueDead",
 			Handler:    _RelayService_RequeueDead_Handler,
+		},
+		{
+			MethodName: "GetJob",
+			Handler:    _RelayService_GetJob_Handler,
 		},
 		{
 			MethodName: "Join",

@@ -25,6 +25,7 @@ type ServerConfig struct {
 	GRPCAddr     string
 	HTTPAddr     string
 	PeerResolver PeerResolver
+	StaleReads   bool
 }
 
 // Server implements the Relay gRPC service, transparent leader forwarding,
@@ -32,13 +33,14 @@ type ServerConfig struct {
 type Server struct {
 	relaypb.UnimplementedRelayServiceServer
 
-	nodeID    string
-	raft      *raft.Raft
-	fsm       *cluster.FSM
-	batcher   *cluster.LeaderBatcher
-	forwarder *Forwarder
-	metrics   *Metrics
-	logger    *slog.Logger
+	nodeID     string
+	raft       *raft.Raft
+	fsm        *cluster.FSM
+	batcher    *cluster.LeaderBatcher
+	forwarder  *Forwarder
+	metrics    *Metrics
+	logger     *slog.Logger
+	staleReads bool
 
 	grpcServer *grpc.Server
 	httpServer *http.Server
@@ -71,14 +73,15 @@ func NewServer(
 	forwarder := NewForwarder(cfg.NodeID, r, cfg.PeerResolver)
 
 	s := &Server{
-		nodeID:    cfg.NodeID,
-		raft:      r,
-		fsm:       fsm,
-		batcher:   batcher,
-		forwarder: forwarder,
-		metrics:   metrics,
-		logger:    logger,
-		stopCh:    make(chan struct{}),
+		nodeID:     cfg.NodeID,
+		raft:       r,
+		fsm:        fsm,
+		batcher:    batcher,
+		forwarder:  forwarder,
+		metrics:    metrics,
+		logger:     logger,
+		staleReads: cfg.StaleReads,
+		stopCh:     make(chan struct{}),
 	}
 
 	// Create gRPC server with unary logging and metrics interceptor
@@ -370,11 +373,20 @@ func (s *Server) RequeueDead(ctx context.Context, req *relaypb.RequeueDeadReques
 	}, nil
 }
 
-// Stats returns queue statistics directly from local FSM state.
-// Note: Stats are served locally and may be slightly stale on followers.
+// Stats returns queue statistics.
+// If StaleReads is false, routes through the leader and verifies leadership via Raft.
 func (s *Server) Stats(ctx context.Context, req *relaypb.StatsRequest) (*relaypb.StatsResponse, error) {
 	if req.Queue == "" {
 		return nil, status.Error(codes.InvalidArgument, "queue cannot be empty")
+	}
+
+	if !s.staleReads {
+		if s.raft.State() != raft.Leader {
+			return s.forwarder.ForwardStats(ctx, req)
+		}
+		if err := s.raft.VerifyLeader().Error(); err != nil {
+			return nil, MapError(err)
+		}
 	}
 
 	stats, err := s.fsm.Stats(req.Queue)
@@ -390,8 +402,8 @@ func (s *Server) Stats(ctx context.Context, req *relaypb.StatsRequest) (*relaypb
 	}, nil
 }
 
-// ListDead returns dead-lettered jobs directly from local FSM state.
-// Note: ListDead is served locally and may be slightly stale on followers.
+// ListDead returns dead-lettered jobs.
+// If StaleReads is false, routes through the leader and verifies leadership via Raft.
 func (s *Server) ListDead(ctx context.Context, req *relaypb.ListDeadRequest) (*relaypb.ListDeadResponse, error) {
 	if req.Queue == "" {
 		return nil, status.Error(codes.InvalidArgument, "queue cannot be empty")
@@ -400,6 +412,15 @@ func (s *Server) ListDead(ctx context.Context, req *relaypb.ListDeadRequest) (*r
 	limit := req.Limit
 	if limit == 0 {
 		limit = 100
+	}
+
+	if !s.staleReads {
+		if s.raft.State() != raft.Leader {
+			return s.forwarder.ForwardListDead(ctx, req)
+		}
+		if err := s.raft.VerifyLeader().Error(); err != nil {
+			return nil, MapError(err)
+		}
 	}
 
 	deadJobs, err := s.fsm.ListDead(req.Queue, limit)
@@ -414,6 +435,32 @@ func (s *Server) ListDead(ctx context.Context, req *relaypb.ListDeadRequest) (*r
 
 	return &relaypb.ListDeadResponse{
 		Jobs: protoJobs,
+	}, nil
+}
+
+// GetJob retrieves a job by ID.
+// If StaleReads is false, routes through the leader and verifies leadership via Raft.
+func (s *Server) GetJob(ctx context.Context, req *relaypb.GetJobRequest) (*relaypb.GetJobResponse, error) {
+	if req.JobId == "" {
+		return nil, status.Error(codes.InvalidArgument, "job_id cannot be empty")
+	}
+
+	if !s.staleReads {
+		if s.raft.State() != raft.Leader {
+			return s.forwarder.ForwardGetJob(ctx, req)
+		}
+		if err := s.raft.VerifyLeader().Error(); err != nil {
+			return nil, MapError(err)
+		}
+	}
+
+	job, err := s.fsm.GetJob(req.JobId)
+	if err != nil {
+		return nil, MapError(err)
+	}
+
+	return &relaypb.GetJobResponse{
+		Job: domainJobToProto(job),
 	}, nil
 }
 

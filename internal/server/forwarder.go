@@ -205,6 +205,45 @@ func (f *Forwarder) ForwardJoin(ctx context.Context, req *relaypb.JoinRequest) (
 	return res, err
 }
 
+// ForwardGetJob forwards a GetJob read request to the leader for linearizability.
+func (f *Forwarder) ForwardGetJob(ctx context.Context, req *relaypb.GetJobRequest) (*relaypb.GetJobResponse, error) {
+	client, addr, fCtx, err := f.getLeaderClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+	res, err := client.GetJob(fCtx, req)
+	if err != nil && status.Code(err) == codes.Unavailable {
+		f.removeConn(addr)
+	}
+	return res, err
+}
+
+// ForwardStats forwards a Stats read request to the leader for linearizability.
+func (f *Forwarder) ForwardStats(ctx context.Context, req *relaypb.StatsRequest) (*relaypb.StatsResponse, error) {
+	client, addr, fCtx, err := f.getLeaderClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+	res, err := client.Stats(fCtx, req)
+	if err != nil && status.Code(err) == codes.Unavailable {
+		f.removeConn(addr)
+	}
+	return res, err
+}
+
+// ForwardListDead forwards a ListDead read request to the leader for linearizability.
+func (f *Forwarder) ForwardListDead(ctx context.Context, req *relaypb.ListDeadRequest) (*relaypb.ListDeadResponse, error) {
+	client, addr, fCtx, err := f.getLeaderClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+	res, err := client.ListDead(fCtx, req)
+	if err != nil && status.Code(err) == codes.Unavailable {
+		f.removeConn(addr)
+	}
+	return res, err
+}
+
 // Close closes all cached client connections.
 func (f *Forwarder) Close() error {
 	f.mu.Lock()
