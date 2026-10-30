@@ -357,6 +357,30 @@ func (h *ClusterHarness) RollingRestart(interWait time.Duration) error {
 	return nil
 }
 
+// KillAllAndRestart terminates all cluster nodes simultaneously, then restarts them.
+func (h *ClusterHarness) KillAllAndRestart(interWait time.Duration) error {
+	nodeIDs := []string{"node-1", "node-2", "node-3"}
+	for _, id := range nodeIDs {
+		if err := h.KillNode(id); err != nil {
+			return fmt.Errorf("failed killing node %s during kill-all: %w", id, err)
+		}
+	}
+	h.RecordFault("KILL_ALL", "cluster", "simultaneously killed all 3 nodes")
+	time.Sleep(interWait)
+
+	for _, id := range nodeIDs {
+		if err := h.RestartNode(id); err != nil {
+			return fmt.Errorf("failed restarting node %s after kill-all: %w", id, err)
+		}
+	}
+	h.RecordFault("RESTART_ALL", "cluster", "restarted all 3 nodes after kill-all")
+
+	if _, err := h.WaitForLeader(12 * time.Second); err != nil {
+		return fmt.Errorf("cluster failed to elect leader after kill-all and restart: %w", err)
+	}
+	return nil
+}
+
 // DrainQueue runs worker loops until all jobs in the given queue reach DONE or DEAD state.
 func (h *ClusterHarness) DrainQueue(ctx context.Context, queue string, tracker *InvariantTracker, numWorkers int) error {
 	stopDrain := make(chan struct{})
